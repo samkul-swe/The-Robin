@@ -1,52 +1,93 @@
-# CS5100 Project Repository
+# The-ROBIN: Fake Job Detection System
 
-## Foundations of AI
+The-ROBIN (Reliable Online Background Investigation Network) is an advanced machine learning system designed to detect fraudulent job postings and help job seekers avoid scams.
 
-### Requirements
-- **Python**: Version 3.9 and above
+## Features
 
-To install all required packages for this project, run:
-```bash
+- **Job Analysis**: Analyze job postings from URLs or manually entered details
+- **Fraud Detection**: Uses advanced machine learning to identify suspicious job postings
+- **Detailed Insights**: Provides confidence scores and specific reasons for flagging
+- **Ensemble Approach**: Combines multiple machine learning models for better accuracy
+- **Web Interface**: Easy-to-use web application for analyzing jobs
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package manager)
+
+### Installation
+
+1. Clone the repository:
+```
+git clone https://github.com/samkul-swe/The-ROBIN.git
+cd The-ROBIN
+```
+
+2. Install dependencies:
+```
 pip install -r requirements.txt
 ```
 
-### Usage
-
-#### Dataset
-- **Full Dataset**: Please use the data from Kaggle: [Real or Fake Job Posting Prediction](https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction).
-  
-- **Part Dataset**: To create the training and testing datasets, run the following command:
-```bash
-python dataset_creator/train_test_split.py
-```
-This will generate `train_set.csv` and `test_set.csv`.
-
-#### Configuration
-Modify the following parameters based on your requirements:
+3. Download NLTK resources (if not automatically downloaded):
 ```python
-dataset_type = 'full'  # or 'part'
-input_file = 'fake_job_postings.csv'  # or 'train_set.csv'
-encoding_method = 'one_hot'  # or 'tf_idf'
-model_name = 'mlp_classifier'  # or 'logistic_regression', 'naive_bayes'
-use_smote = False  # Set to True to apply SMOTE
+import nltk
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('punkt')
 ```
 
-### Running the Script
-Execute the script using Python:
-```bash
-python main.py
+### Usage
+1. Training the models
+First, train the machine learning models using the Kaggle fake job dataset:
 ```
+python main.py --mode train --data path/to/fake_job_postings.csv
+```
+2. Starting the web application
+Once the models are trained, start the web application:
+```
+python main.py --mode serve
+```
+This will start a development server at http://localhost:5000
+3. Analyzing job postings
+Access the web interface at http://localhost:5000
+Either paste a job posting URL or enter job details manually
+Click "Analyze Job" to get results
 
-### Supported Models
-The script supports the following models:
-- **Logistic Regression**: `logistic_regression`
-- **Multi-Layer Perceptron**: `mlp_classifier`
-- **Naive Bayes**: `naive_bayes`
+### How It Works
+The-ROBIN uses an ensemble of machine learning models to analyze job postings:
 
-### Encoding Methods
-You can choose between two encoding methods:
-- **One-Hot Encoding**: `one_hot`
-- **TF-IDF Encoding**: `tf_idf`
+Logistic Regression: Analyzes text patterns using TF-IDF
+Multi-Layer Perceptron (MLP): Learns complex non-linear relationships
+Random Forest: Examines categorical job features
+Support Vector Machine (SVM): Provides precise classification
 
-### SMOTE
-You can apply SMOTE (Synthetic Minority Over-sampling Technique) to balance the training dataset by setting `use_smote` to `True`.
+Each model is optimized for different aspects of job fraud detection:
+
+Logistic Regression works best with SMOTE and TF-IDF
+MLP works best without SMOTE and with TF-IDF
+Random Forest works best with one-hot encoding and SMOTE
+SVM works well with SMOTE and TF-IDF
+
+Warning Signs of Fake Jobs
+The-ROBIN looks for common red flags including:
+
+- Requests for payment or fees
+- Unrealistic salary promises
+- Vague job descriptions
+- Use of personal email domains
+- Requests for sensitive personal information
+- No formal interview process
+- Urgent or high-pressure language
+
+### Dataset
+This project uses the "Real or Fake Job Posting Prediction" dataset from Kaggle, available at:
+https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction
+
+### License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+### Acknowledgments
+Kaggle for providing the dataset
+Everyone who contributed to the libraries used in this project

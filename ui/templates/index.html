@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The-ROBIN | Fake Job Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/robin-logo.png') }}" alt="The-ROBIN Logo">
+                <h1>The-ROBIN</h1>
+            </div>
+            <p class="subtitle">Fake Job Detection System</p>
+        </header>
+
+        <main>
+            <section class="intro">
+                <h2>Protect Yourself from Job Scams</h2>
+                <p>The-ROBIN uses advanced machine learning to detect potential fake job postings and scams. Enter a job posting URL or details below to analyze.</p>
+            </section>
+
+            {% if not model_loaded %}
+            <div class="alert alert-warning">
+                <p><strong>Warning:</strong> Models have not been loaded. Please run the application in training mode first.</p>
+                <p><code>python main.py --mode train</code></p>
+            </div>
+            {% endif %}
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="url-tab">Analyze URL</button>
+                <button class="tab-btn" data-tab="manual-tab">Enter Job Details</button>
+            </div>
+
+            <div class="tab-content active" id="url-tab">
+                <form id="url-form" class="analysis-form">
+                    <div class="form-group">
+                        <label for="job_url">Job Posting URL:</label>
+                        <input type="url" id="job_url" name="job_url" placeholder="https://example.com/job-posting" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" {% if not model_loaded %}disabled{% endif %}>Analyze Job</button>
+                </form>
+            </div>
+
+            <div class="tab-content" id="manual-tab">
+                <form id="manual-form" class="analysis-form">
+                    <div class="form-group">
+                        <label for="job_title">Job Title:</label>
+                        <input type="text" id="job_title" name="job_title" placeholder="e.g. Marketing Manager" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company_name">Company Name:</label>
+                        <input type="text" id="company_name" name="company_name" placeholder="e.g. Acme Corporation">
+                    </div>
+                    <div class="form-group">
+                        <label for="job_description">Job Description:</label>
+                        <textarea id="job_description" name="job_description" rows="5" placeholder="Paste the job description here..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_requirements">Requirements (Optional):</label>
+                        <textarea id="job_requirements" name="job_requirements" rows="3" placeholder="Paste the job requirements here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_benefits">Benefits (Optional):</label>
+                        <textarea id="job_benefits" name="job_benefits" rows="3" placeholder="Paste the job benefits here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="company_profile">Company Profile (Optional):</label>
+                        <textarea id="company_profile" name="company_profile" rows="3" placeholder="Paste the company profile here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_location">Location (Optional):</label>
+                        <input type="text" id="job_location" name="job_location" placeholder="e.g. New York, NY">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_email">Contact Email(s) (Optional):</label>
+                        <input type="text" id="contact_email" name="contact_email" placeholder="e.g. hr@company.com, careers@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_phone">Contact Phone(s) (Optional):</label>
+                        <input type="text" id="contact_phone" name="contact_phone" placeholder="e.g. (555) 123-4567">
+                    </div>
+                    <button type="submit" class="btn btn-primary" {% if not model_loaded %}disabled{% endif %}>Analyze Job</button>
+                </form>
+            </div>
+
+            <div id="loading" class="loading-container hidden">
+                <div class="spinner"></div>
+                <p>Analyzing job posting...</p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="https://github.com/yourusername/The-ROBIN" target="_blank">GitHub</a>
+            </div>
+            <p>&copy; 2023 The-ROBIN | Fake Job Detection System</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

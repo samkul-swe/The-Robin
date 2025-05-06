@@ -1,0 +1,62 @@
+# Virtual environment
+venv/
+env/
+.env/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+*.pkl
+models/*.pkl
+*.joblib
+*.h5
+*.model
+
+# Data files (often too large for git)
+data/*.csv
+*.csv
+*.xlsx
+*.xls
+*.json
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+
+# Local configuration
+instance/
+.env
+config.ini
+secrets.yaml
+
+# Flask
+flask_session/
+.webassets-cache
+
+# Temporary files
+temp/
+tmp/

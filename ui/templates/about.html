@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | The-ROBIN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/robin-logo.png') }}" alt="The-ROBIN Logo">
+                <h1>The-ROBIN</h1>
+            </div>
+            <p class="subtitle">Fake Job Detection System</p>
+        </header>
+
+        <main>
+            <section class="about-section">
+                <h2>About The-ROBIN</h2>
+                <p>The-ROBIN (Real Or Bogus job posting INspector) is an advanced machine learning system designed to detect fraudulent job postings and help job seekers avoid scams.</p>
+                
+                <h3>How It Works</h3>
+                <p>The-ROBIN uses an ensemble of machine learning models to analyze job postings and identify patterns common in fraudulent listings. It combines the power of:</p>
+                <ul>
+                    <li><strong>Logistic Regression</strong> - Analyzes text patterns using TF-IDF</li>
+                    <li><strong>Multi-Layer Perceptron (MLP)</strong> - Learns complex non-linear relationships in job descriptions</li>
+                    <li><strong>Random Forest</strong> - Examines categorical job features and their combinations</li>
+                    <li><strong>Support Vector Machine (SVM)</strong> - Provides precise classification based on text features</li>
+                </ul>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Analyzes job postings from URLs or manually entered details</li>
+                    <li>Provides a fraud confidence score with detailed explanations</li>
+                    <li>Identifies specific warning signs and red flags</li>
+                    <li>Shows breakdown of individual model predictions</li>
+                    <li>Trained on a comprehensive dataset of real and fake job postings</li>
+                </ul>
+                
+                <h3>Warning Signs of Fake Jobs</h3>
+                <p>Common red flags that The-ROBIN looks for include:</p>
+                <ul>
+                    <li>Requests for payment or fees</li>
+                    <li>Unrealistic salary or income promises</li>
+                    <li>Vague job descriptions with few specific details</li>
+                    <li>Poor grammar or unprofessional language</li>
+                    <li>Use of personal email domains instead of company emails</li>
+                    <li>Requests for sensitive personal information early in the process</li>
+                    <li>No formal interview process</li>
+                    <li>Urgent or high-pressure language</li>
+                </ul>
+                
+                <h3>Project Background</h3>
+                <p>The-ROBIN was developed to help combat the growing problem of job scams that target vulnerable job seekers. These scams can lead to identity theft, financial loss, and wasted time. By providing an easy-to-use tool for detecting potential scams, we hope to protect job seekers in their search for legitimate employment.</p>
+                
+                <h3>Data Sources</h3>
+                <p>The system was trained using the "Real or Fake Job Posting Prediction" dataset from Kaggle, containing thousands of labeled job postings to help identify fraudulent patterns.</p>
+                
+                <div class="cta-container">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Try The-ROBIN</a>
+                    <a href="https://github.com/yourusername/The-ROBIN" class="btn btn-secondary" target="_blank">View on GitHub</a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="https://github.com/yourusername/The-ROBIN" target="_blank">GitHub</a>
+            </div>
+            <p>&copy; 2023 The-ROBIN | Fake Job Detection System</p>
+        </footer>
+    </div>
+</body>
+</html>
