@@ -4,7 +4,6 @@ MLP (Multi-Layer Perceptron) model for fake job detection
 
 import os
 import pickle
-import numpy as np
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, accuracy_score, precision_recall_fscore_support
 
@@ -13,11 +12,12 @@ class MLPModel:
     
     def __init__(self):
         self.model = MLPClassifier(
-            hidden_layer_sizes=(100, 50),
-            max_iter=500,
-            random_state=42,
-            early_stopping=True,
-            validation_fraction=0.1
+            activation = 'relu',
+            alpha = 0.0001,
+            hidden_layer_sizes = (100, 50),
+            learning_rate = 'constant',
+            max_iter = 300,
+            solver = 'adam'
         )
         self.is_trained = False
         

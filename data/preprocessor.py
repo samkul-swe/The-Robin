@@ -26,10 +26,11 @@ class Preprocessor:
     def __init__(self):
         # TF-IDF Vectorizer
         self.tfidf_vectorizer = TfidfVectorizer(
-            max_features=5000,
             ngram_range=(1, 2),
             stop_words='english',
-            min_df=2
+            min_df=5,
+            max_df=0.5,
+            max_features=5000
         )
         
         # One-Hot Encoder
@@ -186,7 +187,7 @@ class Preprocessor:
             pandas DataFrame with categorical features
         """
         # Define categorical columns to use
-        categorical_columns = ['employment_type', 'required_experience', 'required_education', 'industry', 'function']
+        categorical_columns = ['employment_type', 'required_experience', 'industry', 'function', 'location']
         categorical_columns = [col for col in categorical_columns if col in df.columns]
         
         if not categorical_columns:
@@ -238,7 +239,7 @@ class Preprocessor:
             pandas DataFrame with categorical features
         """
         # Define categorical fields to use
-        categorical_fields = ['employment_type', 'required_experience', 'required_education', 'industry', 'function']
+        categorical_fields = ['employment_type', 'required_experience', 'industry', 'function']
         
         # Extract categorical fields
         categorical_data = {}

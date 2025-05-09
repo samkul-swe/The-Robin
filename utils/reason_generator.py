@@ -2,7 +2,6 @@
 Reason generator for fake job detection
 """
 
-import re
 import logging
 
 logger = logging.getLogger(__name__)

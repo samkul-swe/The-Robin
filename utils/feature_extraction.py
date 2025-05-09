@@ -3,8 +3,6 @@ Feature extraction utilities for fake job detection
 """
 
 import re
-import pandas as pd
-import numpy as np
 
 class FeatureExtractor:
     """Extract additional features from job postings"""

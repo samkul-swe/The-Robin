@@ -13,11 +13,7 @@ class RandomForestModel:
     """Random Forest model with one-hot encoding and SMOTE"""
     
     def __init__(self):
-        self.model = RandomForestClassifier(
-            n_estimators=100,
-            random_state=42,
-            class_weight='balanced'
-        )
+        self.model = RandomForestClassifier()
         self.is_trained = False
         
     def train(self, X_train, y_train, apply_smote=True):

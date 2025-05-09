@@ -4,8 +4,6 @@ Ensemble model for fake job detection combining multiple models
 
 import os
 import pickle
-import numpy as np
-import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from models.logistic_regression_model import LogisticRegressionModel

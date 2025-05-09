@@ -4,7 +4,6 @@ Data loader for fake job detection
 
 import os
 import pandas as pd
-import numpy as np
 
 class DataLoader:
     """Data loader for loading and processing the dataset"""
@@ -46,26 +45,19 @@ class DataLoader:
         Returns:
             DataFrame with missing values handled
         """
+        # Drop columns 'department' and 'salary_range'
+        df = df.drop(columns=['department','salary_range'])
+
         # Fill missing values in text columns with empty string
-        text_columns = ['title', 'company_profile', 'description', 'requirements', 'benefits']
+        text_columns = ['company_profile', 'description', 'requirements', 'benefits']
         for col in text_columns:
             if col in df.columns:
                 df[col] = df[col].fillna('')
         
         # Fill missing values in categorical columns with 'Unknown'
-        categorical_columns = ['employment_type', 'required_experience', 'required_education', 'industry', 'function']
+        categorical_columns = ['employment_type', 'required_experience', 'industry', 'function', 'location']
         for col in categorical_columns:
             if col in df.columns:
                 df[col] = df[col].fillna('Unknown')
-        
-        # Fill missing values in location columns
-        if 'location' in df.columns:
-            df['location'] = df['location'].fillna('Unknown')
-        
-        # Fill missing values in salary columns
-        salary_columns = ['salary_range', 'salary']
-        for col in salary_columns:
-            if col in df.columns:
-                df[col] = df[col].fillna('Not specified')
         
         return df

@@ -4,7 +4,6 @@ Main module to run the application
 """
 
 import argparse
-import os
 import sys
 import logging
 from ui.app import create_app

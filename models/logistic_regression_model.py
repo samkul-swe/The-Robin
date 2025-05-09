@@ -4,7 +4,6 @@ Logistic Regression model for fake job detection
 
 import os
 import pickle
-import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, accuracy_score, precision_recall_fscore_support
 from imblearn.over_sampling import SMOTE
@@ -13,7 +12,7 @@ class LogisticRegressionModel:
     """Logistic Regression model with SMOTE and TF-IDF"""
     
     def __init__(self):
-        self.model = LogisticRegression(max_iter=1000, random_state=42, class_weight='balanced')
+        self.model = LogisticRegression(C=100, class_weight=None, penalty='l2', solver='liblinear')
         self.is_trained = False
         
     def train(self, X_train, y_train, apply_smote=True):

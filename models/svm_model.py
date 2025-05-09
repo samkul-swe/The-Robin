@@ -4,7 +4,6 @@ SVM model for fake job detection
 
 import os
 import pickle
-import numpy as np
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, accuracy_score, precision_recall_fscore_support
 from imblearn.over_sampling import SMOTE
