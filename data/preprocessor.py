@@ -130,11 +130,11 @@ class Preprocessor:
                 if col not in categorical_features:
                     categorical_features[col] = 'Unknown'
             
-            # Reorder columns to match the order used during training
+            # Make sure the DataFrame has the exact column order expected by the encoder
             categorical_features = categorical_features[self.categorical_columns]
             
             # Transform to one-hot encoding
-            onehot_features = self.onehot_encoder.transform(categorical_features.values.reshape(1, -1))
+            onehot_features = self.onehot_encoder.transform(categorical_features.values)
         else:
             # Create an empty array with the correct shape if no categorical features
             onehot_features = np.zeros((1, len(self.onehot_feature_names)))

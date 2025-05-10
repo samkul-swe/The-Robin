@@ -2,7 +2,6 @@
 Web application for The-ROBIN fake job detection system
 """
 
-import os
 import json
 from flask import Flask, render_template, request, jsonify, url_for, redirect
 import logging
@@ -15,7 +14,6 @@ logger = logging.getLogger(__name__)
 def create_app():
     """Create and configure the Flask application"""
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default-dev-key')
     
     # Initialize models
     ensemble_model = EnsembleModel()
@@ -77,6 +75,14 @@ def create_app():
             
             # Analyze the job posting
             result = ensemble_model.predict(job_data)
+            
+            # Ensure all values are JSON serializable
+            result['is_fake'] = bool(result['is_fake'])
+            result['confidence_score'] = float(result['confidence_score'])
+            
+            if 'model_probabilities' in result:
+                for key in result['model_probabilities']:
+                    result['model_probabilities'][key] = float(result['model_probabilities'][key])
             
             # Add job data to result
             result['job_data'] = job_data

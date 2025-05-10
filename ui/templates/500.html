@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error | The-ROBIN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/robin-logo.jpg') }}" alt="The-ROBIN Logo">
+                <h1>The-ROBIN</h1>
+            </div>
+            <p class="subtitle">Fake Job Detection System</p>
+        </header>
+
+        <main>
+            <div class="error-container">
+                <h1 class="error-code">500</h1>
+                <h2 class="error-title">Server Error</h2>
+                <p class="error-message">Something went wrong on our end. Please try again later.</p>
+                <div class="error-actions">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Go to Homepage</a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="https://github.com/samkul-swe/The-Robin" target="_blank">GitHub</a>
+            </div>
+            <p>&copy; 2025 The-ROBIN | Fake Job Detection System</p>
+        </footer>
+    </div>
+</body>
+</html>

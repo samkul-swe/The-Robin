@@ -155,14 +155,14 @@ class EnsembleModel:
         
         # Return the prediction results
         return {
-            'is_fake': ensemble_prob > 0.5,
-            'confidence_score': confidence_score,
+            'is_fake': bool(ensemble_prob > 0.5),  # Convert to native Python bool
+            'confidence_score': float(confidence_score),  # Convert to native Python float
             'reasons': reasons,
             'model_probabilities': {
-                'logistic_regression': lr_prob,
-                'mlp': mlp_prob,
-                'random_forest': rf_prob,
-                'svm': svm_prob
+                'logistic_regression': float(lr_prob),  # Convert to native Python float
+                'mlp': float(mlp_prob),
+                'random_forest': float(rf_prob),
+                'svm': float(svm_prob)
             }
         }
     
