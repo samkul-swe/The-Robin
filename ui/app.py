@@ -131,4 +131,12 @@ def create_app():
         logger.error(f"Server error: {str(e)}")
         return render_template('500.html'), 500
     
+    @app.route('/health')
+    def health():
+        """Health check endpoint"""
+        return jsonify({
+            'status': 'ok',
+            'message': 'The-ROBIN API is running'
+    })
+    
     return app

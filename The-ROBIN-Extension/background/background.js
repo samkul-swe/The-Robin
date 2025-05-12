@@ -14,9 +14,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     chrome.storage.local.get(['apiUrl'], function(data) {
       const apiUrl = data.apiUrl || 'http://localhost:5000';
       
-      // In a real implementation, make an actual fetch request to your local server
-      // For example:
-      /*
       fetch(`${apiUrl}/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,14 +26,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       .catch(error => {
         console.error('Error analyzing job:', error);
         sendResponse({ success: false, error: 'Error analyzing job' });
-      });
-      */
-      
-      // For this demo, we'll just send a simulated response back
-      sendResponse({
-        success: true,
-        fraudScore: 45,
-        verdict: 'Suspicious'
       });
     });
     

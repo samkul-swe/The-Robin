@@ -5,7 +5,11 @@
   "description": "Detect fraudulent job postings with machine learning",
   "action": {
     "default_popup": "popup/popup.html",
-    "default_icon": "icons/robin-logo.png"
+    "default_icon": {
+      "16": "icons/robin-logo.png",
+      "48": "icons/robin-logo.png",
+      "128": "icons/robin-logo.png"
+    }
   },
   "permissions": [
     "activeTab",
