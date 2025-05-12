@@ -21,8 +21,8 @@ The-ROBIN (Reliable Online Background Investigation Network) is an advanced mach
 
 1. Clone the repository:
 ```
-git clone https://github.com/samkul-swe/The-ROBIN.git
-cd The-ROBIN
+git clone https://github.com/samkul-swe/The-Robin.git
+cd The-Robin
 ```
 
 2. Install dependencies:
