@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The-ROBIN</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="../icons/robin-logo.svg" alt="The-ROBIN Logo">
+        <h1>The-ROBIN</h1>
+      </div>
+      <p class="subtitle">Fake Job Detector</p>
+    </header>
+    
+    <div class="content">
+      <div id="job-info">
+        <h2 id="job-title">No job detected</h2>
+        <p id="company-name"></p>
+      </div>
+      
+      <div id="no-job" class="info-box">
+        <p>Navigate to a job posting to analyze it for potential fraud.</p>
+        <p>The-ROBIN works on Indeed, LinkedIn, Glassdoor, Monster, and ZipRecruiter.</p>
+      </div>
+      
+      <div id="loading" class="info-box hidden">
+        <div class="spinner"></div>
+        <p>Analyzing job posting...</p>
+      </div>
+      
+      <div id="results" class="info-box hidden">
+        <div class="score-container">
+          <div class="score-label">
+            <span>Fraud Score</span>
+            <span id="fraud-score">0%</span>
+          </div>
+          <div class="meter">
+            <div id="score-meter" class="meter-fill"></div>
+          </div>
+        </div>
+        
+        <div id="verdict" class="verdict">
+          <span id="verdict-icon"></span>
+          <span id="verdict-text"></span>
+        </div>
+        
+        <div class="buttons">
+          <button id="analyze-btn">Analyze This Job</button>
+          <a id="details-btn" href="#" target="_blank" class="button secondary">View Details</a>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>Powered by machine learning • <a href="https://your-robin-website.com" target="_blank">Visit Website</a></p>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
