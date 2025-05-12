@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             resultsEl.classList.remove('hidden');
             
             // Update "View Details" link
-            detailsBtn.href = `https://your-robin-website.com/analyze?url=${encodeURIComponent(currentTab.url)}`;
+            detailsBtn.href = `http://localhost:5000/analyze?url=${encodeURIComponent(currentTab.url)}`;
           } else {
             // Not on a job page
             jobTitleEl.textContent = "No job posting detected";
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update "View Details" link with result ID if available
     if (result.resultId) {
-      detailsBtn.href = `https://your-robin-website.com/results/${result.resultId}`;
+      detailsBtn.href = `http://localhost:5000/results/${result.resultId}`;
     }
   }
 });

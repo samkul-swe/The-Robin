@@ -16,26 +16,34 @@
       <p class="subtitle">Fake Job Detector</p>
     </header>
     
-    <div class="content">
-      <div id="job-info">
-        <h2 id="job-title">No job detected</h2>
+    <div id="not-job-page" class="panel">
+      <div class="info-message">
+        <span class="info-icon">ℹ️</span>
+        <p>Navigate to a job posting to analyze it for potential fraud.</p>
+      </div>
+      <p class="supported-sites">Supported sites: Indeed, LinkedIn, Glassdoor, Monster, and ZipRecruiter</p>
+    </div>
+    
+    <div id="job-page" class="panel hidden">
+      <div class="job-details">
+        <h2 id="job-title">Loading job details...</h2>
         <p id="company-name"></p>
       </div>
       
-      <div id="no-job" class="info-box">
-        <p>Navigate to a job posting to analyze it for potential fraud.</p>
-        <p>The-ROBIN works on Indeed, LinkedIn, Glassdoor, Monster, and ZipRecruiter.</p>
+      <div id="unanalyzed" class="action-panel">
+        <p>This job posting has not been analyzed yet.</p>
+        <button id="analyze-btn" class="primary-btn">Analyze This Job</button>
       </div>
       
-      <div id="loading" class="info-box hidden">
-        <div class="spinner"></div>
+      <div id="analyzing" class="action-panel hidden">
+        <div class="loader"></div>
         <p>Analyzing job posting...</p>
       </div>
       
-      <div id="results" class="info-box hidden">
+      <div id="results" class="action-panel hidden">
         <div class="score-container">
-          <div class="score-label">
-            <span>Fraud Score</span>
+          <div class="score-header">
+            <span>Fraud Risk</span>
             <span id="fraud-score">0%</span>
           </div>
           <div class="meter">
@@ -49,14 +57,30 @@
         </div>
         
         <div class="buttons">
-          <button id="analyze-btn">Analyze This Job</button>
-          <a id="details-btn" href="#" target="_blank" class="button secondary">View Details</a>
+          <button id="reanalyze-btn" class="secondary-btn">Reanalyze</button>
+          <a id="details-btn" href="#" target="_blank" class="primary-btn">View Details</a>
         </div>
       </div>
     </div>
     
+    <div class="options-panel">
+      <label class="toggle">
+        <input type="checkbox" id="auto-analyze">
+        <span class="toggle-slider"></span>
+        <span class="toggle-label">Auto-analyze job postings</span>
+      </label>
+      
+      <div class="api-config">
+        <select id="server-select">
+          <option value="http://localhost:5000">Development Server (localhost)</option>
+        </select>
+        <button id="save-server-btn" class="small-btn">Save</button>
+      </div>
+    </div>
+    
     <footer>
-      <p>Powered by machine learning • <a href="https://your-robin-website.com" target="_blank">Visit Website</a></p>
+      <p>Powered by machine learning</p>
+      <p class="version">v1.0.0</p>
     </footer>
   </div>
   <script src="popup.js"></script>

@@ -140,22 +140,36 @@ async function analyzeJob() {
   }
   
   try {
-    // In a real extension, we would send the job data to our server for analysis
-    // For this example, we'll use a simplified local evaluation
+    // Get the API URL from storage
+    const apiUrl = await new Promise(resolve => {
+      chrome.storage.local.get(['apiUrl'], function(data) {
+        resolve(data.apiUrl || 'http://localhost:5000');
+      });
+    });
     
-    // Simulate API call to The-ROBIN server
-    // In a real implementation, this would be an actual fetch request to your API
-    // const response = await fetch('https://your-robin-api.com/analyze', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(jobData)
-    // });
-    // const result = await response.json();
-    
-    // For this example, we'll simulate the analysis
-    const result = simulateJobAnalysis(jobData);
-    
-    return { success: true, result: result };
+    // In a real implementation, send the job data to our server for analysis
+    try {
+      const response = await fetch(`${apiUrl}/analyze`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(jobData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      return { success: true, result: result };
+    } catch (apiError) {
+      console.error('API Error:', apiError);
+      console.log('Falling back to simulated analysis due to API error');
+      
+      // Fall back to local simulation if the API call fails
+      // This is helpful during development when the server might not be running
+      const result = simulateJobAnalysis(jobData);
+      return { success: true, result: result };
+    }
   } catch (error) {
     console.error('Error analyzing job:', error);
     return { success: false, error: 'Error analyzing job' };
@@ -210,71 +224,76 @@ function showJobBadge(result) {
     jobBadge.remove();
   }
   
-  // Create badge
-  jobBadge = document.createElement('div');
-  jobBadge.className = 'robin-job-badge';
-  
-  // Set badge content
-  let badgeColor, badgeIcon, badgeText;
-  
-  if (result.fraudScore < 30) {
-    badgeColor = 'var(--safe-color)';
-    badgeIcon = '✅';
-    badgeText = 'Likely Legitimate';
-  } else if (result.fraudScore < 70) {
-    badgeColor = 'var(--warning-color)';
-    badgeIcon = '⚠️';
-    badgeText = 'Suspicious';
-  } else {
-    badgeColor = 'var(--danger-color)';
-    badgeIcon = '🚫';
-    badgeText = 'Likely Fraudulent';
-  }
-  
-  // Set badge HTML
-  jobBadge.innerHTML = `
-    <div class="robin-badge-header" style="background-color: ${badgeColor}">
-      <img src="${chrome.runtime.getURL('icons/icon-16.png')}" alt="ROBIN">
-      <span>The-ROBIN</span>
-    </div>
-    <div class="robin-badge-content">
-      <div class="robin-badge-score">
-        <span class="robin-score-label">Fraud Score:</span>
-        <span class="robin-score-value">${Math.round(result.fraudScore)}%</span>
+  // Get the API URL from storage for the "View Details" link
+  chrome.storage.local.get(['apiUrl'], function(data) {
+    const apiUrl = data.apiUrl || 'http://localhost:5000';
+    
+    // Create badge
+    jobBadge = document.createElement('div');
+    jobBadge.className = 'robin-job-badge';
+    
+    // Set badge content
+    let badgeColor, badgeIcon, badgeText;
+    
+    if (result.fraudScore < 30) {
+      badgeColor = 'var(--safe-color)';
+      badgeIcon = '✅';
+      badgeText = 'Likely Legitimate';
+    } else if (result.fraudScore < 70) {
+      badgeColor = 'var(--warning-color)';
+      badgeIcon = '⚠️';
+      badgeText = 'Suspicious';
+    } else {
+      badgeColor = 'var(--danger-color)';
+      badgeIcon = '🚫';
+      badgeText = 'Likely Fraudulent';
+    }
+    
+    // Set badge HTML
+    jobBadge.innerHTML = `
+      <div class="robin-badge-header" style="background-color: ${badgeColor}">
+        <img src="${chrome.runtime.getURL('icons/icon-16.png')}" alt="ROBIN">
+        <span>The-ROBIN</span>
       </div>
-      <div class="robin-badge-verdict">
-        <span class="robin-verdict-icon">${badgeIcon}</span>
-        <span class="robin-verdict-text">${badgeText}</span>
+      <div class="robin-badge-content">
+        <div class="robin-badge-score">
+          <span class="robin-score-label">Fraud Score:</span>
+          <span class="robin-score-value">${Math.round(result.fraudScore)}%</span>
+        </div>
+        <div class="robin-badge-verdict">
+          <span class="robin-verdict-icon">${badgeIcon}</span>
+          <span class="robin-verdict-text">${badgeText}</span>
+        </div>
+        <a href="${apiUrl}/results/${result.resultId}" target="_blank" class="robin-badge-details">
+          View Details
+        </a>
       </div>
-      <a href="https://your-robin-website.com/results/${result.resultId}" target="_blank" class="robin-badge-details">
-        View Details
-      </a>
-    </div>
-  `;
-  
-  // Find insertion point (depends on job site)
-  let insertionPoint;
-  const hostname = window.location.hostname;
-  
-  if (hostname.includes('indeed.com')) {
-    insertionPoint = document.querySelector('.jobsearch-JobInfoHeader-title-container');
-  } else if (hostname.includes('linkedin.com')) {
-    insertionPoint = document.querySelector('.top-card-layout__card');
-  } else if (hostname.includes('glassdoor.com')) {
-    insertionPoint = document.querySelector('[data-test="job-header"]');
-  } else if (hostname.includes('monster.com')) {
-    insertionPoint = document.querySelector('.job-header');
-  } else if (hostname.includes('ziprecruiter.com')) {
-    insertionPoint = document.querySelector('.job_header');
-  }
-  
-  // Insert badge
-  if (insertionPoint) {
-    insertionPoint.appendChild(jobBadge);
-  } else {
-    // Fallback - insert at beginning of body
-    document.body.insertBefore(jobBadge, document.body.firstChild);
-  }
+    `;
+    
+    // Find insertion point (depends on job site)
+    let insertionPoint;
+    const hostname = window.location.hostname;
+    
+    if (hostname.includes('indeed.com')) {
+      insertionPoint = document.querySelector('.jobsearch-JobInfoHeader-title-container');
+    } else if (hostname.includes('linkedin.com')) {
+      insertionPoint = document.querySelector('.top-card-layout__card');
+    } else if (hostname.includes('glassdoor.com')) {
+      insertionPoint = document.querySelector('[data-test="job-header"]');
+    } else if (hostname.includes('monster.com')) {
+      insertionPoint = document.querySelector('.job-header');
+    } else if (hostname.includes('ziprecruiter.com')) {
+      insertionPoint = document.querySelector('.job_header');
+    }
+    
+    // Insert badge
+    if (insertionPoint) {
+      insertionPoint.appendChild(jobBadge);
+    } else {
+      // Fallback - insert at beginning of body
+      document.body.insertBefore(jobBadge, document.body.firstChild);
+    }
+  });
 }
 
 // Initialize on page load
