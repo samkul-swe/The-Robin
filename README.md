@@ -81,6 +81,19 @@ The-ROBIN looks for common red flags including:
 - No formal interview process
 - Urgent or high-pressure language
 
+## Machine Learning Pipeline
+- **Data Preprocessing:** Custom text cleaning, feature engineering
+- **Imbalanced Data Handling:** SMOTE oversampling techniques  
+- **Ensemble Methods:** Weighted voting classifier combining 4 algorithms
+- **Model Optimization:** Algorithm-specific hyperparameter tuning
+- **Evaluation:** Cross-validation with precision/recall analysis
+
+## Technical Highlights
+- 92% accuracy on 18K+ job postings
+- Handles class imbalance (fraudulent jobs are rare)
+- Explainable AI with confidence scoring
+- Web interface for real-time analysis
+
 ### Dataset
 This project uses the "Real or Fake Job Posting Prediction" dataset from Kaggle, available at:
 https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction
